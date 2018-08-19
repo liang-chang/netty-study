@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.chang</groupId>
+	<artifactId>netty-sample</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+
+	<modules>
+        <module>netty-client</module>
+        <module>netty-server</module>
+    </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <java.encoding>UTF-8</java.encoding>
+		
+    </properties>
+
+    <distributionManagement>
+        <!-- <repository> -->
+            <!-- <id>deployment</id> -->
+            <!-- <name>挖财maven仓库</name> -->
+            <!-- <url>http://repo.caimi-inc.com/nexus/content/repositories/releases/</url> -->
+        <!-- </repository> -->
+        <!-- <snapshotRepository> -->
+            <!-- <id>deployment</id> -->
+            <!-- <name>挖财maven仓库</name> -->
+            <!-- <url>http://repo.caimi-inc.com/nexus/content/repositories/snapshots/</url> -->
+        <!-- </snapshotRepository> -->
+    </distributionManagement>
+
+    <dependencyManagement>
+        <dependencies>
+           <!-- <dependency> -->
+             <!-- <groupId>com.fasterxml.jackson.core</groupId> -->
+             <!-- <artifactId>jackson-databind</artifactId> -->
+             <!-- <version>2.8.11</version> -->
+           <!-- </dependency> -->
+        </dependencies>
+
+    </dependencyManagement>
+
+    <profiles>
+    </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${java.encoding}</encoding>
+                    <compilerArguments>
+                        <extdirs>lib</extdirs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <parallel>classes</parallel>
+                    <threadCount>2</threadCount>
+<!--                    <forkCount>1</forkCount> -->
+<!--                    <reuseForks>false</reuseForks> -->
+                    <argLine>-Xmx1024m -XX:MaxMetaspaceSize=1024m @{argLine}</argLine>
+ 					<skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <deployAtEnd>true</deployAtEnd>
+                </configuration>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
