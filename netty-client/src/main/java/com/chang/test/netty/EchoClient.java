@@ -48,7 +48,6 @@ public class EchoClient {
 		
 		args=new String[]{"127.0.0.1","8080"};
 				
-		
 		String host = args[0];
 		int port = Integer.parseInt(args[1]);
 		new EchoClient(host, port).start();
